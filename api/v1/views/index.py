@@ -14,30 +14,30 @@ from models.user import User
 
 
 class_dict = {
-        "Amenity": Amenity,
-        "City": City,
-        "Place": Place,
-        "Review": Review,
-        "State": State,
-        "User": User
-        }
+    "Amenity": Amenity,
+    "City": City,
+    "Place": Place,
+    "Review": Review,
+    "State": State,
+    "User": User
+}
 
 names_dict = {
-        "Amenity": "amenities",
-        "City": "cities",
-        "Place": "places",
-        "Review": "reviews",
-        "State": "states",
-        "User": "users"
-        }
+    "Amenity": "amenities",
+    "City": "cities",
+    "Place": "places",
+    "Review": "reviews",
+    "State": "states",
+    "User": "users"
+}
 
 
 @app_views.route('/status', strict_slashes=False)
 def status():
     """ return status of api """
     return jsonify({
-            "status": "OK"
-        })
+        "status": "OK"
+    })
 
 
 @app_views.route('stats', strict_slashes=False)

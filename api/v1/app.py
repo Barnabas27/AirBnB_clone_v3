@@ -36,8 +36,8 @@ def close_session(x):
 def handle_404(x):
     """ returns json formatted error message """
     return jsonify({
-            "error": "Not found"
-        }), 404
+        "error": "Not found"
+    }), 404
 
 
 app.register_error_handler(404, handle_404)

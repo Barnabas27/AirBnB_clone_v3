@@ -47,18 +47,18 @@ def create_state():
     except Exception:
         return jsonify({
             "error": "Not a JSON"
-            }), 400
+        }), 400
     name = data.get("name")
     if not name:
         return jsonify({
             "error": "Missing name"
-            }), 400
+        }), 400
     state = State(name=name)
     state.save()
     dct = state.to_dict()
     return jsonify(
         dct
-        ), 201
+    ), 201
 
 
 @state_views.route('states/<state_id>', strict_slashes=False,
@@ -75,7 +75,7 @@ def update_state_with_id_eq_state_id(state_id):
     except Exception:
         return jsonify({
             "error": "Not a JSON"
-            }), 400
+        }), 400
 
     state_dict = state.to_dict()
     dont_update = ["id", "created_at", "updated_at"]
@@ -87,5 +87,5 @@ def update_state_with_id_eq_state_id(state_id):
     updated_state = State(**state_dict)
     updated_state.save()
     return jsonify(
-            updated_state.to_dict()
-            )
+        updated_state.to_dict()
+    )

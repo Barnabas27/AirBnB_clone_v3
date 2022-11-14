@@ -49,17 +49,17 @@ def create_review():
     except Exception:
         return jsonify({
             "error": "Not a JSON"
-            }), 400
+        }), 400
     name = data.get("name")
     if not name:
         return jsonify({
             "error": "Missing name"
-            }), 400
+        }), 400
     review = Review(name=name)
     review.save()
     return jsonify(
         review.to_dict()
-        ), 201
+    ), 201
 
 
 @review_views.route('reviews/<review_id>', strict_slashes=False,
@@ -76,7 +76,7 @@ def update_review_with_id_eq_review_id(review_id):
     except Exception:
         return jsonify({
             "error": "Not a JSON"
-            }), 400
+        }), 400
 
     review_dict = review.to_dict()
     dont_update = ["id", "created_at", "updated_at", "user_id", "place_id"]
@@ -91,8 +91,8 @@ def update_review_with_id_eq_review_id(review_id):
     updated_review = Review(**review_dict)
     updated_review.save()
     return jsonify(
-            updated_review.to_dict()
-            )
+        updated_review.to_dict()
+    )
 
 
 @review_views.route('places/<place_id>/reviews', strict_slashes=False)
@@ -102,8 +102,8 @@ def get_reviews_of_place(place_id):
     if not place:
         abort(404)
     return jsonify(
-                [review.to_dict() for review in place.reviews]
-            )
+        [review.to_dict() for review in place.reviews]
+    )
 
 
 @review_views.route('places/<place_id>/reviews', strict_slashes=False,
@@ -119,21 +119,21 @@ def create_linked_to_place_review(place_id):
             raise TypeError
     except Exception:
         return jsonify({
-                "error": "Not a JSON"
-            }), 400
+            "error": "Not a JSON"
+        }), 400
     user_id = data.get("user_id")
     if not user_id:
         return jsonify({
-                "error": "Missing user_id"
-            }), 400
+            "error": "Missing user_id"
+        }), 400
 
     user = storage.get(User, user_id)
     if not user:
         abort(404)
     if not data.get("text"):
         return jsonify({
-                "error": "Missing text"
-            }), 400
+            "error": "Missing text"
+        }), 400
 
     review = Review(**data)
     dct = review.to_dict()
@@ -141,6 +141,6 @@ def create_linked_to_place_review(place_id):
     # review.place_id = place.id
     review.save()
     place.save()
-    return(
+    return (
         jsonify(dct)
-        ), 201
+    ), 201

@@ -49,18 +49,18 @@ def create_place():
     except Exception:
         return jsonify({
             "error": "Not a JSON"
-            }), 400
+        }), 400
     abort(405)
     name = data.get("name")
     if not name:
         return jsonify({
             "error": "Missing name"
-            }), 400
+        }), 400
     place = Place(name=name)
     place.save()
     return jsonify(
         place.to_dict()
-        ), 201
+    ), 201
 
 
 @place_views.route('places/<place_id>', strict_slashes=False,
@@ -77,7 +77,7 @@ def update_place_with_id_eq_place_id(place_id):
     except Exception:
         return jsonify({
             "error": "Not a JSON"
-            }), 400
+        }), 400
 
     place_dict = place.to_dict()
     dont_update = ["id", "created_at", "updated_at", "user_id", "city_id"]
@@ -92,8 +92,8 @@ def update_place_with_id_eq_place_id(place_id):
     updated_place = Place(**place_dict)
     updated_place.save()
     return jsonify(
-            updated_place.to_dict()
-            )
+        updated_place.to_dict()
+    )
 
 
 @place_views.route('cities/<city_id>/places', strict_slashes=False)
@@ -103,8 +103,8 @@ def get_places_of_city(city_id):
     if not city:
         abort(404)
     return jsonify(
-                [place.to_dict() for place in city.places]
-            )
+        [place.to_dict() for place in city.places]
+    )
 
 
 @place_views.route('cities/<city_id>/places', strict_slashes=False,
@@ -120,21 +120,21 @@ def create_linked_to_city_place(city_id):
             raise TypeError
     except Exception:
         return jsonify({
-                "error": "Not a JSON"
-            }), 400
+            "error": "Not a JSON"
+        }), 400
     user_id = data.get("user_id")
     if not user_id:
         return jsonify({
-                "error": "Missing user_id"
-            }), 400
+            "error": "Missing user_id"
+        }), 400
 
     user = storage.get(User, user_id)
     if not user:
         abort(404)
     if not data.get("name"):
         return jsonify({
-                "error": "Missing name"
-            }), 400
+            "error": "Missing name"
+        }), 400
 
     place = Place(**data)
     dct = place.to_dict()
@@ -142,9 +142,9 @@ def create_linked_to_city_place(city_id):
     # place.city_id = city.id
     place.save()
     city.save()
-    return(
+    return (
         jsonify(dct)
-        ), 201
+    ), 201
 
 
 @place_views.route('places_search', strict_slashes=False,
@@ -158,7 +158,7 @@ def search_for_place():
     except Exception:
         return jsonify({
             "error": "Not a JSON"
-            }), 400
+        }), 400
     state_ids = data.get("states")
     city_ids = data.get("cities")
     amenity_ids = data.get("amenities")

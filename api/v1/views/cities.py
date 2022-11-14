@@ -48,17 +48,17 @@ def create_city():
     except Exception:
         return jsonify({
             "error": "Not a JSON"
-            }), 400
+        }), 400
     name = data.get("name")
     if not name:
         return jsonify({
             "error": "Missing name"
-            }), 400
+        }), 400
     city = City(name=name)
     city.save()
     return jsonify(
         city.to_dict()
-        ), 201
+    ), 201
 
 
 @city_views.route('cities/<city_id>', strict_slashes=False,
@@ -75,7 +75,7 @@ def update_city_with_id_eq_city_id(city_id):
     except Exception:
         return jsonify({
             "error": "Not a JSON"
-            }), 400
+        }), 400
 
     city_dict = city.to_dict()
     dont_update = ["id", "created_at", "updated_at"]
@@ -113,13 +113,13 @@ def create_linked_to_state_city(state_id):
             raise TypeError
     except Exception:
         return jsonify({
-                "error": "Not a JSON"
-            }), 400
+            "error": "Not a JSON"
+        }), 400
     name = data.get("name")
     if not name:
         return jsonify({
-                "error": "Missing name"
-            }), 400
+            "error": "Missing name"
+        }), 400
 
     city = City(**data)
     # state.cities.append(city)
@@ -127,6 +127,6 @@ def create_linked_to_state_city(state_id):
     city.save()
     state.save()
     dct = city.to_dict()
-    return(
+    return (
         jsonify(dct)
-        ), 201
+    ), 201

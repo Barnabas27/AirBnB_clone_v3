@@ -50,12 +50,12 @@ def create_an_amenity(place_id, amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     if storage_t != "db" and amenity_id in place.amenity_ids:
         return jsonify(
-                    amenity.to_dict()
-                )
+            amenity.to_dict()
+        )
     elif storage_t == "db" and amenity in place.amenities:
         return jsonify(
-                    amenity.to_dict()
-                )
+            amenity.to_dict()
+        )
     dct = amenity.to_dict()
     if storage_t == "db":
         place.amenities.append(amenity)
@@ -63,5 +63,5 @@ def create_an_amenity(place_id, amenity_id):
         place.amenities = amenity
     place.save()
     return jsonify(
-                dct
-            ), 201
+        dct
+    ), 201

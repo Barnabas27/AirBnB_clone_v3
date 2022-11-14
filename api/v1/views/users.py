@@ -47,25 +47,25 @@ def create_user():
     except Exception:
         return jsonify({
             "error": "Not a JSON"
-            }), 400
+        }), 400
     email = data.get("email")
     passwd = data.get("password")
 
     if not email:
         return jsonify({
             "error": "Missing email"
-            }), 400
+        }), 400
 
     if not passwd:
         return jsonify({
             "error": "Missing password"
-            }), 400
+        }), 400
 
     user = User(**data)
     user.save()
     return jsonify(
         user.to_dict()
-        ), 201
+    ), 201
 
 
 @user_views.route('users/<user_id>', strict_slashes=False,
@@ -82,7 +82,7 @@ def update_user_with_id_eq_user_id(user_id):
     except Exception:
         return jsonify({
             "error": "Not a JSON"
-            }), 400
+        }), 400
 
     dont_update = ["id", "email", "created_at", "updated_at"]
     for skip in dont_update:
@@ -121,13 +121,13 @@ def create_linked_to_state_user(state_id):
             raise TypeError
     except Exception:
         return jsonify({
-                "error": "Not a JSON"
-            }), 400
+            "error": "Not a JSON"
+        }), 400
     name = data.get("name")
     if not name:
         return jsonify({
-                "error": "Missing name"
-            }), 400
+            "error": "Missing name"
+        }), 400
 
     user = User(**data)
     # state.users.append(user)
@@ -135,6 +135,6 @@ def create_linked_to_state_user(state_id):
     user.save()
     state.save()
     dct = user.to_dict()
-    return(
+    return (
         jsonify(dct)
-        ), 201
+    ), 201
